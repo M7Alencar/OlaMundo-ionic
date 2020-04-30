@@ -1,31 +1,53 @@
 <ion-header>
-  <ion-toolbar>
+    <ion-toolbar>
 
-      <!-- Botão do menu -->
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-      </ion-buttons>
+        <!-- Botão do menu -->
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
 
-      <ion-title>Lista de Usuários</ion-title>
-  </ion-toolbar>
+        <ion-title>Lista de Usuários</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <!-- Se existem dados para mostrar -->
-  <div *ngIf="data">
+    <!-- carrega usuários -->
+    <div class="ion-text-center ion-margin ion-padding" *ngIf="!data">
+        <ion-spinner name="lines"></ion-spinner>
+    </div>
 
-      <div *ngFor="let user of data">
+    <!-- Se existem dados para mostrar -->
+    <ion-list *ngIf="data" class="ion-margin-bottom">
 
-          <img src="{{user.avatar}}" alt="{{user.name}}">
-          <h4>{{user.id}}) {{user.name}}</h4>
-          <p>E-mail: {{user.email}}</p>
-          <p>Status: {{user.status}}</p>
-          <p>Data: {{user.date}}</p>
-          <p>_____________________</p>
+        <!-- Loop dos dados -->
+        <div *ngFor="let user of itemsPage">
 
-      </div>
+            <ion-item routerDirection="root" [routerLink]="['/usuarios/usuario/', user.id]">
+                <ion-avatar slot="start">
+                    <img src="{{user.avatar}}" alt="{{user.name}}">
+                </ion-avatar>
+                <ion-label>
+                    <h2>{{user.name}}</h2>
+                    <h3>{{user.email}}</h3>
+                </ion-label>
+            </ion-item>
 
-  </div>
+        </div>
+
+    </ion-list>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Carregando mais dados...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    &nbsp;
+
+    <ion-list *ngIf="noUsers">
+        <ion-item color="danger">
+            <ion-label class="ion-text-center">Nenhum usuário foi encontrado!</ion-label>
+        </ion-item>
+    </ion-list>
 
 </ion-content>

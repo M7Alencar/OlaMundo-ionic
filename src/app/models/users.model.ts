@@ -11,3 +11,8 @@ export interface ResponseUsers {
     status: string;
     result: User[];
 }
+
+export interface ResponseUser {
+    status: string;
+    result: User[];
+}

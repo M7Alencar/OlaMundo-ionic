@@ -32,10 +32,13 @@ const routes: Routes = [
     loadChildren: () => import('./users/listusers/listusers.module').then( m => m.ListusersPageModule)
   },
   {
+    path: 'usuarios/usuario/:id',
+    loadChildren: () => import('./users/user/user.module').then( m => m.UserPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
   },
-  
   
 ];
 

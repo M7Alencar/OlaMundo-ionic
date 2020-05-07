@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
-// 1) Rotas dinâmicas
+// Rotas dinâmicas
 import { ActivatedRoute } from '@angular/router';
 
-// 2) Importa modelo dos dados
+// Importa modelo dos dados
 import { User } from '../../models/users.model';
 
-// 2) Importa o service dos usuários
+// Importa o service dos usuários
 import { UsersService } from '../../services/users.service';
+
+// Importa classe de navegação
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-user',
@@ -16,44 +19,47 @@ import { UsersService } from '../../services/users.service';
 })
 export class UserPage implements OnInit {
 
-  // 1) Obtém o Id do usuário da URL
+  // Obtém o Id do usuário da URL da rota
   id: string = this.route.snapshot.paramMap.get('id');
 
-  // 2) Variável que indentifica se temos usuários
+  // Variável que indentifica se temos usuários
   noUser = false;
 
-  // 2) Variável com a array de usuários obtidos
+  // Variável com a array de usuários obtidos
   data: User;
 
   constructor(
 
-    // 1) Inicializa rotas dinâmicas para obter o Id
+    // Inicializa rotas dinâmicas para obter o Id
     private route: ActivatedRoute,
 
-    // 2) Inicializa o service
-    private usersService: UsersService
+    // Inicializa o service dos usuários
+    private usersService: UsersService,
+
+    // Navegação
+    private navCtrl: NavController
 
   ) { }
 
   ngOnInit() {
-
-    // 2) Consultar a API para o Id informado
+    // Consultar a API para o Id informado usando o service getUser
     this.usersService.getUser(this.id).subscribe(
 
       (res: any) => {
-        
 
-        // 2) Caso a consulta à API falhe...
+        // Caso a consulta à API falhe...
         if (res.status !== 'success') {
           console.error(`Erro: ${res.result}`);
           return false;
         }
 
-        // 2) Se não retornou ninguém
+        // Se não retornou ninguém
         if (res.result === 'No record found') {
 
           // Informa ao HTML que ususário não existe
           this.noUser = true;
+
+          // Sai sem fazer mais nada
           return false;
 
           // Se usuário existe
@@ -61,8 +67,6 @@ export class UserPage implements OnInit {
 
           // Mostra no HTML os dados do ususário
           this.data = res.result;
-          console.log(this.data);
-
         }
       }
     );
@@ -75,6 +79,44 @@ export class UserPage implements OnInit {
 
   // Ação do botão Apagar
   delUser(id: string, name: string) {
-    alert(`Apagando ${name}`);
+
+    // Confirmação
+    if (!confirm(
+      `Tem certeza que deseja apagar "${name}"?\n
+    Esta ação é irreversível!\n
+Clique em [Ok] para apagar e [Cancelar] para não apagar...`
+    )) {
+
+      // Sai sem fazer nada
+      return false;
+    }
+
+    // Apaga o retgistro com o Id informado
+    this.usersService.deleteUser(this.id).subscribe(
+      (res: any) => {
+
+        // Se apagou
+        if (res.status === 'success' && res.result === 'Record deleted successfully') {
+
+          // Feedback
+          alert(`Usuário apagado com sucesso!\n\nClique em [Ok] para continuar...`);
+
+          // Retorna para a listagem de ususários
+          this.navCtrl.navigateForward('usuarios/todos');
+
+          // SE não conseguiu apagar
+        } else {
+
+          // Erro
+          console.error('Falha ao apagar usuário: ', res.result);
+
+        }
+      }
+    );
+  }
+
+  // Ação do botão listar usuários
+  listUsers() {
+    this.navCtrl.navigateForward('usuarios/todos');
   }
 }

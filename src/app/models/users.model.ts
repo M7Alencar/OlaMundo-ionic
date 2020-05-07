@@ -16,3 +16,8 @@ export interface ResponseUser {
     status: string;
     result: User[];
 }
+// O que esperar do response de delete
+export interface ResponseDelUser {
+    status: string;
+    result: string;
+}

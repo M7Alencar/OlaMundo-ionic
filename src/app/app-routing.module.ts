@@ -36,10 +36,13 @@ const routes: Routes = [
     loadChildren: () => import('./users/user/user.module').then( m => m.UserPageModule)
   },
   {
+    path: 'usuarios/criar',
+    loadChildren: () => import('./users/create/create.module').then(m => m.CreatePageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
   },
-  
 ];
 
 @NgModule({

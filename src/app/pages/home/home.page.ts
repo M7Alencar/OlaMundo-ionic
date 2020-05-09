@@ -18,5 +18,8 @@ export class HomePage implements OnInit {
   listUsers() {
     this.navCtrl.navigateForward('usuarios/todos');
   }
-
+  //criar usuer
+ createUsers(){
+  this.navCtrl.navigateForward('usuarios/criar');
+ }
 }

@@ -6,18 +6,19 @@ export interface User {
     status: number;
     date: Date;
 }
-
 export interface ResponseUsers {
     status: string;
     result: User[];
 }
-
 export interface ResponseUser {
     status: string;
     result: User[];
 }
-// O que esperar do response de delete
 export interface ResponseDelUser {
+    status: string;
+    result: string;
+}
+export interface ResponsePostUser {
     status: string;
     result: string;
 }

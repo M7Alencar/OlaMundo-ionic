@@ -3,7 +3,7 @@
 
         <!-- Botão do menu -->
         <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
+            <ion-back-button></ion-back-button>
         </ion-buttons>
 
         <ion-title>Lista de Usuários</ion-title>
@@ -12,7 +12,7 @@
 
 <ion-content>
 
-    <!-- carrega usuários -->
+    <!-- Mostre enquando carrega usuários -->
     <div class="ion-text-center ion-margin ion-padding" *ngIf="!data">
         <ion-spinner name="lines"></ion-spinner>
     </div>
@@ -37,6 +37,7 @@
 
     </ion-list>
 
+    <!-- Infinite Scrool -->
     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Carregando mais dados...">
         </ion-infinite-scroll-content>
@@ -44,6 +45,7 @@
 
     &nbsp;
 
+    <!-- Se não existem usuários -->
     <ion-list *ngIf="noUsers">
         <ion-item color="danger">
             <ion-label class="ion-text-center">Nenhum usuário foi encontrado!</ion-label>

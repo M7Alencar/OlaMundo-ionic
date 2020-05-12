@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 // Modelagem dos dados
-import { ResponseUsers, ResponseDelUser } from '../models/users.model';
+import { ResponseUsers, ResponseDelUser, ResponsePostUser } from '../models/users.model';
 
 
 @Injectable({
@@ -42,5 +42,21 @@ export class UsersService {
     const url = `${this.apiUrl}?id=${id}`;
 
     return this.http.delete<ResponseDelUser>(url);
+  }
+
+  // Método para salvar um novo usuário
+  postUser(data: any) {
+    let url = `${this.apiUrl}?`;
+
+    // Montando requisição
+    Object.keys(data).forEach(
+      (key) => {
+        url += `${key}=${data[key]}&`;
+      }
+    );
+
+    console.log(url);
+
+    return this.http.post<ResponsePostUser>(url, data);
   }
 }

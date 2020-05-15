@@ -40,9 +40,14 @@ const routes: Routes = [
     loadChildren: () => import('./users/create/create.module').then(m => m.CreatePageModule)
   },
   {
+    path: 'usuarios/editar/:id',
+    loadChildren: () => import('./users/edit/edit.module').then( m => m.EditPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
   },
+  
 ];
 
 @NgModule({

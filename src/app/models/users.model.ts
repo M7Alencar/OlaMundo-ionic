@@ -1,3 +1,4 @@
+// Modelo de dados do usuário
 export interface User {
     id: number;
     name: string;
@@ -6,19 +7,33 @@ export interface User {
     status: number;
     date: Date;
 }
+
+// Response dos usuários
 export interface ResponseUsers {
-    status: string;
+    status: number;
     result: User[];
 }
+
+// Response de 1 usuário
 export interface ResponseUser {
-    status: string;
+    status: number;
     result: User[];
 }
+
+// Response de Delete
 export interface ResponseDelUser {
-    status: string;
+    status: number;
     result: string;
 }
+
+// Response de Post
 export interface ResponsePostUser {
-    status: string;
+    status: number;
+    result: string;
+}
+
+// Response de Put
+export interface ResponsePutUser {
+    status: number;
     result: string;
 }
